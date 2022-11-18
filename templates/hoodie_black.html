@@ -31,19 +31,14 @@
             <div class="navbar-nav">
               <a class="nav-link" href="index.html">Home</a>
               <a class="nav-link" href="shop.html">Shop</a>
-              <a class="nav-link" href="contact.html">Contact</a>
               <a class="nav-link" href="cart.html"><i class="bi bi-cart"></i></a>
-              <a class="nav-link"><i class="bi bi-person-circle"></i></a>
             </div>
           </div>
         </div>
     </nav>
-    <h1 class="text-center">
-        Chrome Logo Hoodie
-    </h1>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-8" style="text-align: center;"><img src="./static/hoodie_black.jpg" style="max-width: 40%;" ></div>
+            <div class="col-8" style="text-align: center;"><img src="./static/Chrome Logo Hoodie.jpg" style="max-width: 40%;" ></div>
             <div class="col-4">
                 <h1 id="product" style="text-align: center">Chrome Logo Hoodie</h1><br>
                 <h3 id="price" style="text-align: center">59,90€</h3>
@@ -54,8 +49,12 @@
                     <option value="3">L</option>
                     <option value="4">XL</option>
                 </select>
-                <input type="submit" id="add_cart" value="Add to cart!">
-                <div style="text-align: center">
+                <input type="submit" id="add_cart" value="Add to cart!" class=" btn btn-primary">
+                <span class="alert alert-success" role="alert" id="success_alert">
+                  The product got successfully added to your cart!
+                </span>
+                
+                <div style="text-align: center;" class="mt-3">
                     <div>435 gsm</div>
                     <div>washed black</div>
                     <div>made in Portugal</div>
@@ -70,6 +69,7 @@
     </div>
     <script>
       $(document).ready(function() {
+        $("#success_alert").hide()
           $("#add_cart").click(function() {
               const size = $("#size_chart option:selected").text();
               const price = $("#price").html().split("€")[0].replace(",", ".");
@@ -84,7 +84,9 @@
                   product: product
                 },
                 function(data, status){
-                  alert("Data: " + data);
+                  console.log("huhu")
+                  $("#success_alert").show()
+                  $("#success_alert").fadeOut(3000)
                 });
               };
               console.log(size);

@@ -34,21 +34,33 @@ app.post('/addToCart', (req, res) => {
     });
   });
   db.close();
+  //res.setHeader("Content-Type", "application/json");
+  res.writeHead(200);
+  res.end("Product got successfully added to your cart!");
 });
 
 app.get('/sendOrder', (req, res) => {
   let db = new sqlite3.Database("order.db")
   db.serialize(function(){
     db.run("DELETE FROM bestellung;")
-
-    db.each("SELECT * FROM bestellung", function(err, row) {
-      if (err) throw 'Whoops, got a ' + err;
-      console.log(row.product + " " + row.size + " " + row.price);
-    });
   });
 });
+
+app.get('/getOrder', (req, res) => {
+  let db = new sqlite3.Database("order.db")
+    var sql = "SELECT * from bestellung";
+    db.all(sql, function(err, rows){
+      var jsondata = (JSON.stringify(rows));
+      console.log(jsondata)
+      res.setHeader("Content-Type", "application/json");
+      res.writeHead(200);
+      res.end(jsondata);
+      db.close();
+    });
+  });
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
+
 
